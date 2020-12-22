@@ -36,15 +36,6 @@
     value: settings['enableLogin']})
 }}
 
-{{ forms.lightswitchField({
-    label: 'Enable Password Login',
-    instructions: 'Allow login with password for accounts created through OpenID.',
-    id: 'allowPasswordLogin',
-    name: 'allowPasswordLogin',
-    on: settings['allowPasswordLogin'],
-    value: settings['allowPasswordLogin']})
-}}
-
 {{ forms.textField({
     label: 'Client ID',
     instructions: 'The google client Id that you created for this application goes here.',

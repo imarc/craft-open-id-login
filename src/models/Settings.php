@@ -65,9 +65,9 @@ class Settings extends Model
         return [
             ['clientId', 'string'],
             ['clientId', 'default', 'value' => ''],
-            [['defaultGroup'], 'number', 'integerOnly' => true],
-            ['enableLogin', 'boolean'],
-            ['allowPasswordLogin', 'boolean']
+            ['defaultGroup', 'number'],
+            ['defaultGroup', 'integerOnly' => true],
+            ['enableLogin', 'boolean']
         ];
     }
 }

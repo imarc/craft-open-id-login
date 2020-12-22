@@ -11,22 +11,15 @@
 namespace Imarc\Craft\OpenidLogin;
 
 use Imarc\Craft\OpenidLogin\services\OpenidLoginService as OpenidLoginServiceService;
-use Imarc\Craft\OpenidLogin\variables\OpenidLoginVariable;
 use Imarc\Craft\OpenidLogin\models\Settings;
-use Imarc\Craft\OpenidLogin\utilities\OpenidLoginUtility as OpenidLoginUtilityUtility;
 
 use Imarc\Craft\OpenidLogin\assetbundles\openidlogin\OpenidLoginAsset;
 
 use Craft;
 use craft\base\Plugin;
 use craft\services\Plugins;
-use craft\events\PluginEvent;
 use craft\web\UrlManager;
-use craft\services\Utilities;
-use craft\web\twig\variables\CraftVariable;
-use craft\events\RegisterComponentTypesEvent;
 use craft\events\RegisterUrlRulesEvent;
-use craft\web\View;
 
 use yii\base\Event;
 

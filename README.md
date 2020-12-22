@@ -2,8 +2,6 @@
 
 Allows for CP login with Google's OpenID.
 
-![Screenshot](resources/img/plugin-logo.png)
-
 ## Requirements
 
 This plugin requires Craft CMS 3.0.0-beta.23 or later.
@@ -18,26 +16,19 @@ To install the plugin, follow these instructions.
 
 2. Then tell Composer to load the plugin:
 
-        composer require /open-id-login
+        composer require imarc/craft-open-id-login
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for OpenID Login.
 
 ## OpenID Login Overview
+A simple plugin that allows for creating/accessing accounts through Google Login. 
 
--Insert text here-
+Requires you to create a OAuth Client ID from [Google Developers Console](https://console.developers.google.com/apis/credentials). Then paste the client Id into the 
+'Client Id' field under OpenId settings(`/admin/settings/plugins/open-id-login`). Once you're ready flip the lightswitch for `Enable Login` and users will be able to log in with their google accounts. 
 
-## Configuring OpenID Login
+If you would like to only allow accounts from your organization make sure that your google application user type is set to Internal.
 
--Insert text here-
+## Settings
 
-## Using OpenID Login
-
--Insert text here-
-
-## OpenID Login Roadmap
-
-Some things to do, and ideas for potential features:
-
-* Release it
 
 Brought to you by [Imarc](https://www.imarc.com/)

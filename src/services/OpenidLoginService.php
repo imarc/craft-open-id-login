@@ -13,12 +13,12 @@ namespace Imarc\Craft\OpenidLogin\services;
 use Imarc\Craft\OpenidLogin\OpenidLogin;
 use Imarc\Craft\OpenidLogin\records\OpenidLoginRecord;
 use craft\elements\User;
+use craft\records\UserGroup;
 
 use Google;
 
 use Craft;
 use craft\base\Component;
-// use craft\records\User;
 
 /**
  * OpenidLoginService Service
@@ -49,21 +49,28 @@ class OpenidLoginService extends Component
 
         // This will validate against the clientID
         if ($payload = $client->verifyIdToken($id_token)) {
+            $generalConfig = Craft::$app->getConfig()->getGeneral();
+            $settings      = OpenidLogin::$plugin->getSettings();
+            $response      = Craft::$app->response;
+            $users         = Craft::$app->getUsers();
+            $userExists    = User::findOne(['email' => $payload['email']]);
 
-            $userExists = User::findOne(['email' => $payload['email']]);
+            if (!$userExists) {
+                // Create a new user
+                $userExists = $this->createUser($payload);
 
-            if ($userExists) {
-                //If the user already exists log them in
-                $generalConfig = Craft::$app->getConfig()->getGeneral();
+                if (!$userExists) {
+                    return $response->setStatusCode(400);
+                }
+
                 Craft::$app->getUser()->login($userExists, $generalConfig->userSessionDuration);
+                return $response->redirect($users->getPasswordResetUrl($userExists));
+            }
 
+            //If the user already exists log them in
+            if (Craft::$app->getUser()->login($userExists, $generalConfig->userSessionDuration)) {
                 $referrer = Craft::$app->request->getReferrer();
                 return Craft::$app->response->redirect($referrer);
-
-            } else {
-
-                // Create a new user
-                return $this->createUser($payload);
             }
         }
 
@@ -74,6 +81,7 @@ class OpenidLoginService extends Component
     public function createUser($payload) {
         // $userSettings = Craft::$app->getProjectConfig()->get('users') ?? [];
         // $requireEmailVerification = $userSettings['requireEmailVerification'] ?? true;
+        $settings = OpenidLogin::$plugin->getSettings();
 
         $user = new User();
         $user->username        = $payload['email'];
@@ -90,21 +98,23 @@ class OpenidLoginService extends Component
 
         }
 
-        // Send the activation email
-        $response = Craft::$app->getResponse();
-        $users = Craft::$app->getUsers();
+        //Assign User default Group
+        $group = UserGroup::findOne(['id' => $settings->defaultGroup ?? null]);
+        if ($group) {
+            Craft::$app->getUsers()->assignUserToGroups($user->getId(), [$group->id]);
+        }
 
-        // Incase the user is deleted at one point
+        // In case the user is deleted at one point
         $record = OpenidLoginRecord::findOne(['providerId' => $payload['sub']]);
         if (!$record) {
             $record = new OpenidLoginRecord();
         }
 
-        // Associate the user with
-        $record->userId = $user->getId();
+        // Associate the user with plugin record
+        $record->userId     = $user->getId();
         $record->providerId = $payload['sub'];
         $record->save();
 
-        return $response->redirect($users->getPasswordResetUrl($user));
+        return $user;
     }
 }
