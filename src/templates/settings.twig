@@ -1,0 +1,65 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * OpenID Login plugin for Craft CMS 3.x
+ *
+ * OpenID Login Settings.twig
+ *
+ * @author    Imarc
+ * @copyright Copyright (c) 2020 Imarc
+ * @link      https://www.imarc.com/
+ * @package   OpenidLogin
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% set groups = [{
+    label: "None",
+    value: ''
+}] %}
+
+{% for group in craft.app.userGroups.getAllGroups() %}
+    {% set groups = groups|merge([{
+        label: group.name,
+        value: group.id
+    }]) %}
+{% endfor %}
+
+{{ forms.lightswitchField({
+    label: 'Enable Login',
+    instructions: 'Toggle this to enable admin panel login with google.',
+    id: 'enableLogin',
+    name: 'enableLogin',
+    on: settings['enableLogin'],
+    value: settings['enableLogin']})
+}}
+
+{{ forms.lightswitchField({
+    label: 'Enable Password Login',
+    instructions: 'Allow login with password for accounts created through OpenID.',
+    id: 'allowPasswordLogin',
+    name: 'allowPasswordLogin',
+    on: settings['allowPasswordLogin'],
+    value: settings['allowPasswordLogin']})
+}}
+
+{{ forms.textField({
+    label: 'Client ID',
+    instructions: 'The google client Id that you created for this application goes here.',
+    id: 'clientId',
+    name: 'clientId',
+    value: settings['clientId']})
+}}
+
+{{ forms.selectField({
+    label: "Default User Group",
+    id: 'defaultGroup',
+    name: 'defaultGroup',
+    instructions: "Choose the default user group that will be assigned to users who's account is created through OpenID.",
+    options: groups,
+    value: settings.defaultGroup ?? null,
+    errors: settings.getErrors('defaultGroup'),
+}) }}
+

@@ -1,0 +1,17 @@
+{% extends parentLayout|default('_layouts/cp') %}
+{% import "_includes/forms" as forms %}
+
+{% do view.registerAssetBundle("Imarc\\Craft\\OpenidLogin\\assetbundles\\indexcpsection\\IndexCPSectionAsset") %}
+
+{% set title = "User Default Settings"|t('open-id-login') %}
+
+{% block content %}
+    {{ forms.textField({
+        label: 'User Group',
+        instructions: 'The google client Id that you created for this application goes here.',
+        id: 'clientId',
+        name: 'clientId',
+        value: ''})
+    }}
+    {# {{ actionInput('open-id-login/default/defaults') }} #}
+{% endblock %}
