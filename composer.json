@@ -45,6 +45,6 @@
         "components": {
             "openidLoginService": "Imarc\\Craft\\OpenidLogin\\services\\OpenidLoginService"
         },
-        "class": "Imarc\\Craft\\OpenidLogin"
+        "class": "Imarc\\Craft\\OpenidLogin\\OpenidLogin"
     }
 }
