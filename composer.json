@@ -11,8 +11,8 @@
         "openid login"
     ],
     "support": {
-        "docs": "???",
-        "issues": "???"
+        "docs": "https://github.com/imarc/craft-open-id-login",
+        "issues": "https://github.com/imarc/craft-open-id-login/issues"
     },
     "license": "proprietary",
     "authors": [
