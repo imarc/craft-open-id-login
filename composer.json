@@ -32,7 +32,7 @@
     },
     "autoload": {
         "psr-4": {
-          "Imarc\\Craft\\OpenidLogin": "src/"
+          "Imarc\\Craft\\OpenidLogin\\": "src/"
         }
     },
     "extra": {
