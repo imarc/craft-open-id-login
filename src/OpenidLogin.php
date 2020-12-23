@@ -96,7 +96,6 @@ class OpenidLogin extends Plugin
     {
         parent::init();
         self::$plugin = $this;
-        $settings = $this->getSettings();
 
         // Register our CP routes
         Event::on(
@@ -106,16 +105,13 @@ class OpenidLogin extends Plugin
                 $event->rules['open-id-login'] = 'open-id-login/default/defaults';
             }
         );
-// var_dump($settings);exit();
+        
         // Do something after we're installed
         Event::on(
             Plugins::class,
             Plugins::EVENT_AFTER_LOAD_PLUGINS,
-            function () use ($settings){
-                if ($settings->enableLogin && !empty($settings->clientId)) {
-                    $this->executeLogic();
-                }
-
+            function() {
+                $this->executeLogic();
             }
         );
 
@@ -186,6 +182,11 @@ class OpenidLogin extends Plugin
     {
         $request = Craft::$app->getRequest();
         $settings = $this->getSettings();
+
+        // Only run if all the settings are set
+        if ($settings->enableLogin && !empty($settings->clientId)) {
+            return;
+        }
 
         if ($request->getIsLoginRequest()) {
             $view = Craft::$app->getView();
