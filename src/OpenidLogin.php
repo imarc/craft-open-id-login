@@ -76,7 +76,7 @@ class OpenidLogin extends Plugin
      *
      * @var bool
      */
-    public $hasCpSection = true;
+    // public $hasCpSection = true;
 
     // Public Methods
     // =========================================================================

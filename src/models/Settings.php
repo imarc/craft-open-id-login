@@ -10,8 +10,6 @@
 
 namespace Imarc\Craft\OpenidLogin\models;
 
-use Imarc\Craft\OpenidLogin\OpenidLogin;
-
 use Craft;
 use craft\base\Model;
 
@@ -62,11 +60,19 @@ class Settings extends Model
      */
     public function rules()
     {
+        $allowed = [];
+        foreach (Craft::$app->getUserGroups()->getAllGroups() as $group) {
+            $allowed[] = $group->id;
+        }
+
         return [
             ['clientId', 'string'],
             ['clientId', 'default', 'value' => ''],
-            ['defaultGroup', 'number'],
-            ['defaultGroup', 'integerOnly' => true],
+            ['defaultGroup', function($attribute, $params, $validator) use ($allowed) {
+                if (!in_array($this->defaultGroup, $allowed)) {
+                    $this->addError($attribute, 'Please select a validate group.');
+                }
+            }],
             ['enableLogin', 'boolean']
         ];
     }
