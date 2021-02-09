@@ -184,7 +184,7 @@ class OpenidLogin extends Plugin
         $settings = $this->getSettings();
 
         // Only run if all the settings are set
-        if ($settings->enableLogin && !empty($settings->clientId)) {
+        if (!$settings->enableLogin || empty($settings->clientId)) {
             return;
         }
 
