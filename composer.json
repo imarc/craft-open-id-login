@@ -40,15 +40,15 @@
     },
     "extra": {
         "name": "OpenID Login",
-        "handle": "imarc/open-id-login",
+        "handle": "open-id-login",
         "developer": "Imarc",
         "developerUrl": "https://www.imarc.com/",
-        "documentationUrl": "???",
-        "changelogUrl": "???",
+        "documentationUrl": "https://github.com/imarc/craft-open-id-login",
+        "changelogUrl": "https://github.com/imarc/craft-open-id-login/releases",
         "components": {
             "openidLoginService": "Imarc\\Craft\\OpenidLogin\\services\\OpenidLoginService"
         },
-        "class": "Imarc\\Craft\\OpenidLogin",
+        "class": "Imarc\\Craft\\OpenidLogin\\OpenidLogin",
         "google/apiclient-services": []
     }
 }
