@@ -58,7 +58,7 @@ class Settings extends Model
      *
      * @return array
      */
-    public function rules()
+    public function rules() : array
     {
         $allowed = [];
         foreach (Craft::$app->getUserGroups()->getAllGroups() as $group) {
