@@ -109,7 +109,7 @@ class Install extends Migration
                     'dateUpdated' => $this->dateTime()->notNull(),
                     'uid' => $this->uid(),
                     // Custom columns in the table
-                    'userId' => $this->string(255)->notNull(),
+                    'userId' => $this->integer()->notNull(),
                     'providerId' => $this->string(255)->notNull()->defaultValue(''),
                 ]
             );

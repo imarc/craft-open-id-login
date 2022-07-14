@@ -2,7 +2,7 @@
     "name": "imarc/craft-open-id-login",
     "description": "Allows for CP login with Google's OpenID.",
     "type": "craft-plugin",
-    "version": "1.0.1",
+    "version": "2.0.0",
     "keywords": [
         "craft",
         "cms",
@@ -22,20 +22,20 @@
         }
     ],
     "require": {
-        "craftcms/cms": "^3.0.0",
+        "craftcms/cms": "^4.0.0",
         "google/apiclient": "^2.7"
     },
     "require-dev": {
-      "craftcms/cms": "^3.2.0",
-      "codeception/codeception": "^3.0",
-      "vlucas/phpdotenv": "^3.0"
+        "codeception/codeception": "^4.2",
+        "vlucas/phpdotenv": "^5.4",
+        "craftcms/rector": "dev-main"
     },
     "scripts": {
         "post-update-cmd": "Google\\Task\\Composer::cleanup"
     },
     "autoload": {
         "psr-4": {
-          "Imarc\\Craft\\OpenidLogin\\": "src/"
+            "Imarc\\Craft\\OpenidLogin\\": "src/"
         }
     },
     "extra": {
@@ -50,5 +50,7 @@
         },
         "class": "Imarc\\Craft\\OpenidLogin\\OpenidLogin",
         "google/apiclient-services": []
-    }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }
