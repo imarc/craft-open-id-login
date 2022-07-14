@@ -1,11 +1,11 @@
 <?php
 /**
- * OpenID Login plugin for Craft CMS 3.x
+ * OpenID Login plugin for Craft CMS
  *
  * Allows for CP login with Google's OpenID.
  *
  * @link      https://www.imarc.com/
- * @copyright Copyright (c) 2020 Imarc
+ * @copyright Copyright (c) 2022 Imarc
  */
 
 namespace Imarc\Craft\OpenidLogin\services;
@@ -50,7 +50,6 @@ class OpenidLoginService extends Component
         // This will validate against the clientID
         if ($payload = $client->verifyIdToken($id_token)) {
             $generalConfig = Craft::$app->getConfig()->getGeneral();
-            $settings      = OpenidLogin::$plugin->getSettings();
             $response      = Craft::$app->response;
             $users         = Craft::$app->getUsers();
             $userExists    = User::findOne(['email' => $payload['email']]);
@@ -69,18 +68,20 @@ class OpenidLoginService extends Component
 
             //If the user already exists log them in
             if (Craft::$app->getUser()->login($userExists, $generalConfig->userSessionDuration)) {
-                $referrer = Craft::$app->request->getReferrer();
-                return Craft::$app->response->redirect($referrer);
+                $return_url = Craft::$app->user->getReturnUrl();
+                return Craft::$app->response->redirect($return_url);
             }
         }
 
         return Craft::$app->response->setStatusCode(400);
     }
 
-
+    /**
+     * Creates a new user based on information from the Open ID payload.
+     *
+     * @return User
+     */
     public function createUser($payload) {
-        // $userSettings = Craft::$app->getProjectConfig()->get('users') ?? [];
-        // $requireEmailVerification = $userSettings['requireEmailVerification'] ?? true;
         $settings = OpenidLogin::$plugin->getSettings();
 
         $user = new User();
