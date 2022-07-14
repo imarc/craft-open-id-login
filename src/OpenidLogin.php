@@ -191,15 +191,18 @@ class OpenidLogin extends Plugin
         if ($request->getIsLoginRequest()) {
             $view = Craft::$app->getView();
             $view->registerAssetBundle(OpenidLoginAsset::class);
-            $view->registerMetaTag([
-                'name'    => 'google-signin-scope',
-                'content' => 'profile email'
-            ]);
+            //$view->registerMetaTag([
+            //    'name'    => 'google-signin-scope',
+            //    'content' => 'profile email'
+            //]);
+            
+            // Leaving this in as it's easier to retrieve the clientId from
+            // here than pass it into the Asset JS.
             $view->registerMetaTag([
                 'name'    => 'google-signin-client_id',
                 'content' => $settings->clientId
             ]);
-            $view->registerJsFile("https://apis.google.com/js/platform.js?onload=init");
+            $view->registerJsFile("https://accounts.google.com/gsi/client");
         }
     }
 }

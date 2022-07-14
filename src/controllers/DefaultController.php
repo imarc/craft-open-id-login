@@ -53,6 +53,8 @@ class DefaultController extends Controller
      */
     protected array|int|bool $allowAnonymous = ['index'];
 
+    public $enableCsrfValidation = false;
+
     // Public Methods
     // =========================================================================
 
@@ -65,7 +67,7 @@ class DefaultController extends Controller
     public function actionIndex()
     {
         $request = Craft::$app->request;
-        $id = $request->get('id_token');
+        $id = $request->post('credential');
 
         $loginService = new OpenidLoginService();
         return $loginService->logInUser($id);
